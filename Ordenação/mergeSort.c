@@ -3,6 +3,7 @@
 #include <time.h>
 
 #define TAM 400000
+#define STEP 20000
 
 void intercala(int p, int q, int r, int v[]){
     int *w, i=p, j=q, k=0;
@@ -32,22 +33,26 @@ void mergeSort(int p, int r, int v[]){
 }
 
 int main(){
-    int v[TAM];
     clock_t t;
     
     //aleatoriedade
     srand((unsigned)time(NULL));
 
-    //adiciona valores no vetor
-    for (int i = 0; i < TAM; i++){
-        v[i] = rand()%TAM;
+    for (int i = 1; i <= TAM/STEP; i++){
+    
+        int *v = malloc(sizeof(int)*STEP*i);
+
+        //adiciona valores no vetor
+        for (int j = 0; j < STEP*i; j++){
+            v[j] = rand()%TAM;
+        }
+
+        //armazena o tempo
+        t = clock();
+        mergeSort(0, STEP*i, v);
+        t = clock() - t;
+
+
+        printf("Tempo de execucao (%d iteracoes): %.6lf ms\n", STEP*i,((double)t)/((CLOCKS_PER_SEC/1000)));
     }
-
-    //armazena o 
-    t = clock();
-    mergeSort(0, TAM, v);
-    t = clock() - t;
-
-    printf("Tempo de execucao: %.6lf ms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
-
-}
+}   
