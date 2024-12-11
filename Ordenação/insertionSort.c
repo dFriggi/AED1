@@ -3,6 +3,7 @@
 #include <time.h>
 
 #define TAM 400000
+#define STEP 20000
 
 int main(){
     int i, j, x, v[TAM];
@@ -11,25 +12,28 @@ int main(){
     //aleatoriedade
     srand((unsigned)time(NULL));
 
-    //adiciona valores no vetor
-    for (int i = 0; i < TAM; i++){
-        v[i] = rand()%TAM;
-    }
-    
-    t = clock();
-    //ordena o vetor por meio do insertionSort
-    for (i = 1; i < TAM; i++){
-        x = v[i];
+    for(int k = 1; k <= TAM/STEP; k++){
 
-        for (j = i-1; j >= 0 && v[j] > x; j--){
-            v[j+1] = v[j];
+        //adiciona valores no vetor
+        for (int i = 0; i < STEP*k; i++){
+            v[i] = rand()%TAM;
+        }
+    
+        t = clock();
+        //ordena o vetor por meio do insertionSort
+        for (i = 1; i < STEP*k; i++){
+            x = v[i];
+
+            for (j = i-1; j >= 0 && v[j] > x; j--){
+                v[j+1] = v[j];
+            }
+
+            v[j+1] = x;
+        
         }
 
-    v[j+1] = x;
-        
+        t = clock() - t;
+
+        printf("Tempo de execucao (%d iteracoes): %.6lf ms\n-------------------\n", STEP*k, ((double)t)/((CLOCKS_PER_SEC/1000)));
     }
-
-    t = clock() - t;
-
-    printf("Tempo de execucao: %.6lf ms\n", ((double)t)/((CLOCKS_PER_SEC/1000)));
 }
