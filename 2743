@@ -1,0 +1,3 @@
+select name, length(name) as qtd from people
+group by name
+order by 2 desc
