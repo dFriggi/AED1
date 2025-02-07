@@ -1,4 +1,0 @@
-select pd.name, c.name from products pd
-inner join categories c on c.id = pd.id_categories
-where pd.amount > 100
-and pd.id_categories in (1,2,3,6,9)
